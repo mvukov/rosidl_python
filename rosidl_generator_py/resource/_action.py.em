@@ -39,34 +39,24 @@ class Metaclass_@(action.namespaced_type.name)(type):
 
     @@classmethod
     def __import_type_support__(cls):
-        try:
-            from rosidl_generator_py import import_type_support
-            module = import_type_support('@(package_name)')
-        except ImportError:
-            import logging
-            import traceback
-            logger = logging.getLogger(
-                '@('.'.join(action.namespaced_type.namespaced_name()))')
-            logger.debug(
-                'Failed to import needed modules for type support:\n' +
-                traceback.format_exc())
-        else:
-            cls._TYPE_SUPPORT = module.type_support_action__@('__'.join(action.namespaced_type.namespaces[1:]))_@(action_name)
+        import @(package_name).@(package_name)_s__rosidl_typesupport_c as module
 
-            from action_msgs.msg import _goal_status_array
-            if _goal_status_array.Metaclass_GoalStatusArray._TYPE_SUPPORT is None:
-                _goal_status_array.Metaclass_GoalStatusArray.__import_type_support__()
-            from action_msgs.srv import _cancel_goal
-            if _cancel_goal.Metaclass_CancelGoal._TYPE_SUPPORT is None:
-                _cancel_goal.Metaclass_CancelGoal.__import_type_support__()
+        cls._TYPE_SUPPORT = module.type_support_action__@('__'.join(action.namespaced_type.namespaces[1:]))_@(action_name)
 
-            from @('.'.join(action.namespaced_type.namespaces)) import @(module_name)
-            if @(module_name).Metaclass_@(action.send_goal_service.namespaced_type.name)._TYPE_SUPPORT is None:
-                @(module_name).Metaclass_@(action.send_goal_service.namespaced_type.name).__import_type_support__()
-            if @(module_name).Metaclass_@(action.get_result_service.namespaced_type.name)._TYPE_SUPPORT is None:
-                @(module_name).Metaclass_@(action.get_result_service.namespaced_type.name).__import_type_support__()
-            if @(module_name).Metaclass_@(action.feedback_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
-                @(module_name).Metaclass_@(action.feedback_message.structure.namespaced_type.name).__import_type_support__()
+        from action_msgs.msg import _goal_status_array
+        if _goal_status_array.Metaclass_GoalStatusArray._TYPE_SUPPORT is None:
+            _goal_status_array.Metaclass_GoalStatusArray.__import_type_support__()
+        from action_msgs.srv import _cancel_goal
+        if _cancel_goal.Metaclass_CancelGoal._TYPE_SUPPORT is None:
+            _cancel_goal.Metaclass_CancelGoal.__import_type_support__()
+
+        from @('.'.join(action.namespaced_type.namespaces)) import @(module_name)
+        if @(module_name).Metaclass_@(action.send_goal_service.namespaced_type.name)._TYPE_SUPPORT is None:
+            @(module_name).Metaclass_@(action.send_goal_service.namespaced_type.name).__import_type_support__()
+        if @(module_name).Metaclass_@(action.get_result_service.namespaced_type.name)._TYPE_SUPPORT is None:
+            @(module_name).Metaclass_@(action.get_result_service.namespaced_type.name).__import_type_support__()
+        if @(module_name).Metaclass_@(action.feedback_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
+            @(module_name).Metaclass_@(action.feedback_message.structure.namespaced_type.name).__import_type_support__()
 
 
 class @(action.namespaced_type.name)(metaclass=Metaclass_@(action.namespaced_type.name)):

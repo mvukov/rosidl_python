@@ -94,26 +94,16 @@ class Metaclass_@(message.structure.namespaced_type.name)(type):
 
     @@classmethod
     def __import_type_support__(cls):
-        try:
-            from rosidl_generator_py import import_type_support
-            module = import_type_support('@(package_name)')
-        except ImportError:
-            import logging
-            import traceback
-            logger = logging.getLogger(
-                '@('.'.join(message.structure.namespaced_type.namespaced_name()))')
-            logger.debug(
-                'Failed to import needed modules for type support:\n' +
-                traceback.format_exc())
-        else:
+        import @(package_name).@(package_name)_s__rosidl_typesupport_c as module
+
 @{
 suffix = '__'.join(message.structure.namespaced_type.namespaces[1:]) + '__' + convert_camel_case_to_lower_case_underscore(message.structure.namespaced_type.name)
 }@
-            cls._CREATE_ROS_MESSAGE = module.create_ros_message_msg__@(suffix)
-            cls._CONVERT_FROM_PY = module.convert_from_py_msg__@(suffix)
-            cls._CONVERT_TO_PY = module.convert_to_py_msg__@(suffix)
-            cls._TYPE_SUPPORT = module.type_support_msg__@(suffix)
-            cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__@(suffix)
+        cls._CREATE_ROS_MESSAGE = module.create_ros_message_msg__@(suffix)
+        cls._CONVERT_FROM_PY = module.convert_from_py_msg__@(suffix)
+        cls._CONVERT_TO_PY = module.convert_to_py_msg__@(suffix)
+        cls._TYPE_SUPPORT = module.type_support_msg__@(suffix)
+        cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__@(suffix)
 @{
 importable_typesupports = set()
 for member in message.structure.members:
@@ -134,9 +124,9 @@ for member in message.structure.members:
 }@
 @[for typename in sorted(importable_typesupports)]@
 
-            from @('.'.join(typename[:-2])) import @(typename[-2])
-            if @(typename[-1]).__class__._TYPE_SUPPORT is None:
-                @(typename[-1]).__class__.__import_type_support__()
+        from @('.'.join(typename[:-2])) import @(typename[-2])
+        if @(typename[-1]).__class__._TYPE_SUPPORT is None:
+            @(typename[-1]).__class__.__import_type_support__()
 @[end for]@
 
     @@classmethod

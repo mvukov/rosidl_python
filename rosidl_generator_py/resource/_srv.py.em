@@ -23,25 +23,15 @@ class Metaclass_@(service.namespaced_type.name)(type):
 
     @@classmethod
     def __import_type_support__(cls):
-        try:
-            from rosidl_generator_py import import_type_support
-            module = import_type_support('@(package_name)')
-        except ImportError:
-            import logging
-            import traceback
-            logger = logging.getLogger(
-                '@('.'.join(service.namespaced_type.namespaced_name()))')
-            logger.debug(
-                'Failed to import needed modules for type support:\n' +
-                traceback.format_exc())
-        else:
-            cls._TYPE_SUPPORT = module.type_support_srv__@('__'.join(service.namespaced_type.namespaces[1:]))_@(service_name)
+        import @(package_name).@(package_name)_s__rosidl_typesupport_c as module
 
-            from @('.'.join(service.namespaced_type.namespaces)) import @(module_name)
-            if @(module_name).Metaclass_@(service.request_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
-                @(module_name).Metaclass_@(service.request_message.structure.namespaced_type.name).__import_type_support__()
-            if @(module_name).Metaclass_@(service.response_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
-                @(module_name).Metaclass_@(service.response_message.structure.namespaced_type.name).__import_type_support__()
+        cls._TYPE_SUPPORT = module.type_support_srv__@('__'.join(service.namespaced_type.namespaces[1:]))_@(service_name)
+
+        from @('.'.join(service.namespaced_type.namespaces)) import @(module_name)
+        if @(module_name).Metaclass_@(service.request_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
+            @(module_name).Metaclass_@(service.request_message.structure.namespaced_type.name).__import_type_support__()
+        if @(module_name).Metaclass_@(service.response_message.structure.namespaced_type.name)._TYPE_SUPPORT is None:
+            @(module_name).Metaclass_@(service.response_message.structure.namespaced_type.name).__import_type_support__()
 
 
 class @(service.namespaced_type.name)(metaclass=Metaclass_@(service.namespaced_type.name)):
